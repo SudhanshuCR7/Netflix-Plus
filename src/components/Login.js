@@ -3,15 +3,19 @@ import Header from "./Header";
 import { useState } from "react";
 import { validateFormFiedls } from "../utils/validate";
 import { auth } from "../utils/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
+  const userName = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -36,7 +40,18 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
             console.log(user);
+            updateProfile(user, {
+              displayName: userName.current.value
+            }).then(() => {
+              // Profile updated!
+              const {uid, email, displayName} = auth.currentUser;
+              dispatch(addUser({uid:uid, email:email, displayName:displayName}))
+            }).catch((error) => {
+              // An error occurred
+              // ...
+            });
             navigate('/browse')
+            
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -80,6 +95,7 @@ const Login = () => {
         </h1>
         {!isSignInForm && (
           <input
+            ref={userName}
             type="text"
             placeholder="Full Name"
             className="p-3 my-4 w-full rounded-lg bg-gray-700"
