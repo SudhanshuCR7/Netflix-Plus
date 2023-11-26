@@ -4,7 +4,6 @@ import { useState } from "react";
 import { validateFormFiedls } from "../utils/validate";
 import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -14,7 +13,7 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const userName = useRef(null);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const changeForm = () => {
@@ -49,9 +48,7 @@ const Login = () => {
             }).catch((error) => {
               // An error occurred
               // ...
-            });
-            navigate('/browse')
-            
+            });            
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -65,8 +62,6 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user)
-            navigate('/browse')
           })
           .catch((error) => {
             const errorCode = error.code;
