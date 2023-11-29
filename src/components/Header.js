@@ -43,7 +43,6 @@ const Header = () => {
        alt='netflix-logo'/> 
        {user && 
            <>
-           <div className='text-white'>{user.displayName}</div>
            <div className='p-2'>
             <img 
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCXfE7SB58j4afPD54nAb_PTXPl42LAIYtsg&usqp=CAU' 

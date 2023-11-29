@@ -1,35 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { API_OPTIONS } from '../utils/constant'
+import React from 'react'
+import {useSelector } from 'react-redux'
+import useMovieTrailer from '../hooks/useMovieTrailer';
 
 const VideoBackground = ({id}) => {
-  const [trailerId, setTrailerId] =useState(null);
+  
+  const trailer = useSelector((store) => store.movie?.mainTrailer);
 
-  const movieTrailer = async () => {
-     const data  = await fetch('https://api.themoviedb.org/3/movie/'+id+'/videos?language=en-US', API_OPTIONS)
-     const json = await data.json();
-
-     const trailer = json.results.filter((v) => v.type === "Trailer")
-     const mainTrailer = trailer[0];
-     setTrailerId(mainTrailer.key)
-  }
-
-  useEffect(() => {
-   movieTrailer();
-  }, [])
+  useMovieTrailer(id)
 
   return (
-    <div>
-      <iframe
-        width="560"
-        height="315"
-        src={'https://www.youtube.com/embed/'+ trailerId }
+    <div className='w-screen'>
+      <iframe className='w-screen aspect-video'
+        src={'https://www.youtube.com/embed/'+trailer?.key + "?&autoplay=1&mute=1"}
         title="YouTube video player"
-       
+        allowFullScreen
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        
       ></iframe>
     </div>
   );
 }
 
-export default VideoBackground
+export default VideoBackground;
