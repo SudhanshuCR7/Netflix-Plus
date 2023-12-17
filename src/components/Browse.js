@@ -7,8 +7,11 @@ import usePopularMovies from '../hooks/usePopularMovies';
 import useUpcomingMovies from '../hooks/useUpcomingMovies';
 import useTopRatedMovies from '../hooks/useTopRatedMovies';
 import usePopularTvshows from '../hooks/usePopularTvshows';
+import { useSelector } from 'react-redux';
+import GptView from './GptView';
 
 const Browse = () => {
+  const isGPT = useSelector(store => store.gpt.isGPT)
 
  useNowPlayingMovies();
  usePopularMovies();
@@ -19,8 +22,13 @@ const Browse = () => {
   return (
     <div>
       <Header/>
-      <MainContainer/>
+
+      { isGPT ? <GptView/> : 
+      <> <MainContainer/>
       <SecondaryContainer/>
+       </>}
+      
+    
     </div>
   )
 }
