@@ -5,7 +5,7 @@ import { auth } from '../utils/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { LOGO, SUPPORTED_LANGUAGES } from '../utils/constant';
-import { toggleGPT } from '../utils/gptSlice';
+import { noGPTview, removeMoviesNamesWithTmdbResponse, toggleGPT } from '../utils/gptSlice';
 import { langChange } from '../utils/configSlice';
 
 const Header = () => {
@@ -39,10 +39,16 @@ const Header = () => {
 
   const handleIsGptView = () => {
    dispatch(toggleGPT())
+   dispatch(removeMoviesNamesWithTmdbResponse())
   }
 
   const handleLangChange = (e) => {
     dispatch(langChange(e.target.value))
+  }
+
+  const handleLogoClick = () => {
+   dispatch(noGPTview())
+   dispatch(removeMoviesNamesWithTmdbResponse())
   }
 
   const isGPT = useSelector(store => store.gpt.isGPT)
@@ -50,7 +56,8 @@ const Header = () => {
   return (
     <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between'>
        <img 
-       className='w-44'
+       onClick={handleLogoClick}
+       className='w-44 hover:cursor-pointer'
        src={LOGO}
        alt='netflix-logo'/> 
        {user && 
