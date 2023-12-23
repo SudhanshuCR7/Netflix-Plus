@@ -45,13 +45,13 @@ const GptView = () => {
   return (
     <>
     <img 
-    className='fixed -z-10'
+    className='fixed -z-10 object-cover h-screen md:h-auto'
     src={BG_URL} 
     alt='bg-poster'/>
-    <div className='pt-[10%] flex justify-center'>
+    <div className='pt-[45%] md:pt-[10%] flex justify-center'>
     <form 
     onSubmit={(e) => {e.preventDefault()}}
-    className='w-1/2 bg-black grid grid-cols-12'>
+    className='w-full md:w-1/2 bg-black grid grid-cols-12'>
       <input 
       ref={inputTxt}
       type='text' 

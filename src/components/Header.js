@@ -54,19 +54,19 @@ const Header = () => {
   const isGPT = useSelector(store => store.gpt.isGPT)
 
   return (
-    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between'>
+    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between'>
        <img 
        onClick={handleLogoClick}
-       className='w-44 hover:cursor-pointer'
+       className='w-44 hover:cursor-pointer mx-auto md:mx-0'
        src={LOGO}
        alt='netflix-logo'/> 
        {user && 
            <>
           
-           <div className='p-2 flex'>
+           <div className='p-2 flex justify-between '>
            {isGPT &&  <select
            onChange={handleLangChange} 
-           className='h-10 mr-4 bg-gray-900 text-white'>
+           className='h-10 mr-4 bg-gray-900 text-white rounded-lg'>
            {SUPPORTED_LANGUAGES.map((lang) => (
               <option 
               key={lang.identifier} 
@@ -80,7 +80,7 @@ const Header = () => {
 
            <div className='mr-4'>
            <button 
-             className='text-white p-2 rounded-lg bg-purple-500'
+             className='text-white p-2 rounded-lg bg-purple-500 '
              onClick={handleIsGptView}>
               {isGPT ? 'Homepage' : 'GPT Search'}
              </button>
@@ -89,7 +89,7 @@ const Header = () => {
             <img 
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCXfE7SB58j4afPD54nAb_PTXPl42LAIYtsg&usqp=CAU' 
             alt='profile-icon'
-            className='h-10 w-10'/>
+            className='hidden md:inline-block h-10 w-10'/>
             <button className='font-bold text-white' onClick={handleSignOut}>Sign Out</button>
 
            </div>
